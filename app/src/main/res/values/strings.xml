@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Place Description</string>
+    <string name="initJson_string">{\n
+    \t"name": "ASU-Poly",\n
+    \t"description": "Home of ASU's Software Engineering Programs",\n
+    \t"category": "School",\n
+    \t"address-title": "ASU Software Engineering",\n
+    \t"address-street": "7171 W Sonoran Arroyo Mall\nPeralta Hall 230\nMesa AZ 85212",\n
+    \t"elevation": 1384,\n
+    \t"latitude": 33.306388,\n
+    \t"longitude": -111.679121\n
+}</string>
+    <string name="init_placedescription_with_json_button_text">Init PlaceDescription with JSON</string>
+    <string name="enter_json_for_placedescription">Enter JSON for PlaceDescription</string>
+</resources>
