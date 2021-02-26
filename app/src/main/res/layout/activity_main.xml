@@ -39,7 +39,56 @@
         />
 
     <TextView
-        android:id="@+id/placeDescriptionName"
+        android:id="@+id/placeDescriptionDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/placeDescriptionCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/placeDescriptionAddressTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/placeDescriptionAddressStreet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/placeDescriptionElevation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/placeDescriptionLatitude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/placeDescriptionLongitude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/placeDescriptionToJsonString"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"

@@ -3,7 +3,10 @@ package edu.asu.bsse.dlee129.placedescription;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,18 +35,30 @@ public class MainActivity extends AppCompatActivity {
 
         textInitJson = findViewById(R.id.initJson);
         textPlaceDescriptionName = findViewById(R.id.placeDescriptionName);
+        textPlaceDescriptionDescription = findViewById(R.id.placeDescriptionDescription);
+        textPlaceDescriptionCategory = findViewById(R.id.placeDescriptionCategory);
+        textPlaceDescriptionAddressTitle = findViewById(R.id.placeDescriptionAddressTitle);
+        textPlaceDescriptionAddressStreet = findViewById(R.id.placeDescriptionAddressStreet);
+        textPlaceDescriptionElevation = findViewById(R.id.placeDescriptionElevation);
+        textPlaceDescriptionLatitude = findViewById(R.id.placeDescriptionLatitude);
+        textPlaceDescriptionLongitude = findViewById(R.id.placeDescriptionLongitude);
+        textPlaceDescriptionToJsonString = findViewById(R.id.placeDescriptionToJsonString);
     }
 
     private boolean validateInitJson() {
-        String initJson = textInitJson.getEditText().getText().toString().trim();
+        EditText editableTextInitJson = textInitJson.getEditText();
+        if (editableTextInitJson != null) {
+            String initJson = editableTextInitJson.getText().toString().trim();
 
-        if (initJson.isEmpty()) {
-            textInitJson.setError("Field can't be empty");
-            return false;
-        } else {
-            textInitJson.setError(null);
-            return true;
+            if (initJson.isEmpty()) {
+                textInitJson.setError("Field can't be empty");
+                return false;
+            } else {
+                textInitJson.setError(null);
+                return true;
+            }
         }
+        return false;
     }
 
     public void initPlaceDescription(View v) {
@@ -52,10 +67,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         jsonStr = textInitJson.getEditText().getText().toString();
-        Toast.makeText(this, jsonStr, Toast.LENGTH_SHORT).show();
+        Log.i("initPlaceDescription", "JSON String : " + jsonStr);
 
         placeDescription = new PlaceDescription(jsonStr);
         textPlaceDescriptionName.setText("Name : " + placeDescription.getName());
+        textPlaceDescriptionDescription.setText("Description : " + placeDescription.getDescription());
+        textPlaceDescriptionCategory.setText("Category : " + placeDescription.getCategory());
+        textPlaceDescriptionAddressTitle.setText("Address Title : " + placeDescription.getAddressTitle());
+        textPlaceDescriptionAddressStreet.setText("Address Street : " + placeDescription.getAddressStreet());
+        textPlaceDescriptionElevation.setText("Elevation : " + placeDescription.getElevation());
+        textPlaceDescriptionLatitude.setText("Latitude : " + placeDescription.getLatitude());
+        textPlaceDescriptionLongitude.setText("Longitude : " + placeDescription.getLongitude());
+        textPlaceDescriptionToJsonString.setText("PlaceDescription.toJsonString() : " + placeDescription.toJsonString());
+        Log.i("initPlaceDescription", "PlaceDescription.toJsonString() : " + placeDescription.toJsonString());
     }
 
 }
