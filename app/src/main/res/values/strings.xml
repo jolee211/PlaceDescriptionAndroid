@@ -12,4 +12,13 @@
 }</string>
     <string name="init_placedescription_with_json_button_text">Init PlaceDescription with JSON</string>
     <string name="enter_json_for_placedescription">Enter JSON for PlaceDescription</string>
+    <string name="placedescription_name">Name: %1$s</string>
+    <string name="placedescription_description">Description: %1$s</string>
+    <string name="placedescription_category">Category: %1$s</string>
+    <string name="placedescription_address_title">Address Title: %1$s</string>
+    <string name="placedescription_address_street">Address Street: %1$s</string>
+    <string name="placedescription_elevation">Elevation: %1$d</string>
+    <string name="placedescription_latitude">Latitude: %1$f</string>
+    <string name="placedescription_longitude">Longitude: %1$f</string>
+    <string name="placedescription_PlaceDescription.toJsonString">PlaceDescription.toJsonString(): %1$s</string>
 </resources>

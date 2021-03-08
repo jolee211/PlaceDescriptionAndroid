@@ -1,0 +1,64 @@
+{
+  "places": [
+    {
+      "name": "ASU-Poly",
+      "description": "Home of ASU's Software Engineering Programs",
+      "category": "School",
+      "address-title": "ASU Software Engineering",
+      "address-street": "7171 W Sonoran Arroyo Mall\nPeralta Hall 230\nMesa AZ 85212",
+      "elevation": 1384,
+      "latitude": 33.306388,
+      "longitude": -111.679121
+    },
+    {
+      "name": "Din Tai Fung",
+      "description": "Taiwanese Restaurant",
+      "category": "Restaurant",
+      "address-title": "ARIA Resort & Casino",
+      "address-street": "3730 S Las Vegas Blvd\nLas Vegas NV 89158",
+      "elevation": 0,
+      "latitude": 36.10709,
+      "longitude": -115.17782
+    },
+    {
+      "name": "IKEA",
+      "description": "Furniture store",
+      "category": "Store",
+      "address-title": "IKEA",
+      "address-street": "2110 W Ikea Way\nTempe AZ 85284",
+      "elevation": 0,
+      "latitude": 33.34087,
+      "longitude": -111.96999
+    },
+    {
+      "name": "Costco Wholesale",
+      "description": "Warehouse store",
+      "category": "Store",
+      "address-title": "Costco Wholesale",
+      "address-street": "12011 Technology Dr\nEden Prairie MN 55344",
+      "elevation": 0,
+      "latitude": 44.86037,
+      "longitude": -93.43527
+    },
+    {
+      "name": "Arizona Diagnostic Radiology",
+      "description": "Medical Diagnostic imaging center",
+      "category": "Medical",
+      "address-title": "Gateway Medical Professional Village",
+      "address-street": "4915 E Baseline Rd #116\nGilbert AZ 85234",
+      "elevation": 0,
+      "latitude": 33.37863,
+      "longitude": -111.72521
+    },
+    {
+      "name": "Benvenuti Pizzeria",
+      "description": "Pizza Restaurant",
+      "category": "Restaurant",
+      "address-title": "Hudson Tower Condominium",
+      "address-street": "235 South End Ave\nNew York NY 10280",
+      "elevation": 0,
+      "latitude": 40.70986,
+      "longitude": -74.01598
+    }
+  ]
+}

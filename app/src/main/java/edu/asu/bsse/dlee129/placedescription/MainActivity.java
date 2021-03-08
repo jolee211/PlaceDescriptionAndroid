@@ -1,18 +1,21 @@
 package edu.asu.bsse.dlee129.placedescription;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.res.AssetManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.w3c.dom.Text;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 // Copyright 2021 David Lee
 /*
@@ -33,8 +36,6 @@ import org.w3c.dom.Text;
  */
 public class MainActivity extends AppCompatActivity {
     private TextInputLayout textInitJson;
-    private String jsonStr;
-    private PlaceDescription placeDescription;
     private TextView textPlaceDescriptionName;
     private TextView textPlaceDescriptionDescription;
     private TextView textPlaceDescriptionCategory;
@@ -45,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView textPlaceDescriptionLongitude;
     private TextView textPlaceDescriptionToJsonString;
 
+    private PlaceLibrary placeLibrary;
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         textPlaceDescriptionLatitude = findViewById(R.id.placeDescriptionLatitude);
         textPlaceDescriptionLongitude = findViewById(R.id.placeDescriptionLongitude);
         textPlaceDescriptionToJsonString = findViewById(R.id.placeDescriptionToJsonString);
+
+        initPlaceLibrary();
     }
 
     private boolean validateInitJson() {
@@ -83,20 +89,36 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        jsonStr = textInitJson.getEditText().getText().toString();
+        String jsonStr = textInitJson.getEditText().getText().toString();
         Log.i("initPlaceDescription", "JSON String : " + jsonStr);
 
-        placeDescription = new PlaceDescription(jsonStr);
-        textPlaceDescriptionName.setText("Name : " + placeDescription.getName());
-        textPlaceDescriptionDescription.setText("Description : " + placeDescription.getDescription());
-        textPlaceDescriptionCategory.setText("Category : " + placeDescription.getCategory());
-        textPlaceDescriptionAddressTitle.setText("Address Title : " + placeDescription.getAddressTitle());
-        textPlaceDescriptionAddressStreet.setText("Address Street : " + placeDescription.getAddressStreet());
-        textPlaceDescriptionElevation.setText("Elevation : " + placeDescription.getElevation());
-        textPlaceDescriptionLatitude.setText("Latitude : " + placeDescription.getLatitude());
-        textPlaceDescriptionLongitude.setText("Longitude : " + placeDescription.getLongitude());
-        textPlaceDescriptionToJsonString.setText("PlaceDescription.toJsonString() : " + placeDescription.toJsonString());
+        PlaceDescription placeDescription = new PlaceDescription(jsonStr);
+        textPlaceDescriptionName.setText(String.format(getResources().getString(R.string.placedescription_name), placeDescription.getName()));
+        textPlaceDescriptionDescription.setText(String.format(getResources().getString(R.string.placedescription_description), placeDescription.getDescription()));
+        textPlaceDescriptionCategory.setText(String.format(getResources().getString(R.string.placedescription_category), placeDescription.getCategory()));
+        textPlaceDescriptionAddressTitle.setText(String.format(getResources().getString(R.string.placedescription_address_title), placeDescription.getAddressTitle()));
+        textPlaceDescriptionAddressStreet.setText(String.format(getResources().getString(R.string.placedescription_address_street), placeDescription.getAddressStreet()));
+        textPlaceDescriptionElevation.setText(String.format(getResources().getString(R.string.placedescription_elevation), placeDescription.getElevation()));
+        textPlaceDescriptionLatitude.setText(String.format(getResources().getString(R.string.placedescription_latitude), placeDescription.getLatitude()));
+        textPlaceDescriptionLongitude.setText(String.format(getResources().getString(R.string.placedescription_longitude), placeDescription.getLongitude()));
+        textPlaceDescriptionToJsonString.setText(String.format(getResources().getString(R.string.placedescription_name), placeDescription.getName()));
         Log.i("initPlaceDescription", "PlaceDescription.toJsonString() : " + placeDescription.toJsonString());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void initPlaceLibrary() {
+        AssetManager assetManager = getResources().getAssets();
+        String json = null;
+        try (InputStream is = assetManager.open("places.json")) {
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+
+            json = new String(buffer, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        placeLibrary = new PlaceLibrary(json);
     }
 
 }
