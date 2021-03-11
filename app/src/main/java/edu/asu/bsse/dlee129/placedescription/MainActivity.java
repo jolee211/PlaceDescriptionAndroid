@@ -10,12 +10,15 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 // Copyright 2021 David Lee
 /*
@@ -48,24 +51,27 @@ public class MainActivity extends AppCompatActivity {
 
     private PlaceLibrary placeLibrary;
 
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        textInitJson = findViewById(R.id.initJson);
-        textPlaceDescriptionName = findViewById(R.id.placeDescriptionName);
-        textPlaceDescriptionDescription = findViewById(R.id.placeDescriptionDescription);
-        textPlaceDescriptionCategory = findViewById(R.id.placeDescriptionCategory);
-        textPlaceDescriptionAddressTitle = findViewById(R.id.placeDescriptionAddressTitle);
-        textPlaceDescriptionAddressStreet = findViewById(R.id.placeDescriptionAddressStreet);
-        textPlaceDescriptionElevation = findViewById(R.id.placeDescriptionElevation);
-        textPlaceDescriptionLatitude = findViewById(R.id.placeDescriptionLatitude);
-        textPlaceDescriptionLongitude = findViewById(R.id.placeDescriptionLongitude);
-        textPlaceDescriptionToJsonString = findViewById(R.id.placeDescriptionToJsonString);
-
         initPlaceLibrary();
+        ArrayList<ExampleItem> exampleList = new ArrayList<>();
+        for (PlaceDescription pd :
+                placeLibrary.getPlaceDescriptions()) {
+            exampleList.add(new ExampleItem(R.drawable.ic_android, pd.getName(), pd.getDescription()));
+        }
+
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new ExampleAdapter(exampleList);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private boolean validateInitJson() {
