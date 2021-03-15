@@ -1,24 +1,18 @@
 package edu.asu.bsse.dlee129.placedescription;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.textfield.TextInputLayout;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
 // Copyright 2021 David Lee
 /*
@@ -38,22 +32,8 @@ import java.util.ArrayList;
  * @version February 2021
  */
 public class MainActivity extends AppCompatActivity {
-    private TextInputLayout textInitJson;
-    private TextView textPlaceDescriptionName;
-    private TextView textPlaceDescriptionDescription;
-    private TextView textPlaceDescriptionCategory;
-    private TextView textPlaceDescriptionAddressTitle;
-    private TextView textPlaceDescriptionAddressStreet;
-    private TextView textPlaceDescriptionElevation;
-    private TextView textPlaceDescriptionLatitude;
-    private TextView textPlaceDescriptionLongitude;
-    private TextView textPlaceDescriptionToJsonString;
-
     private PlaceLibrary placeLibrary;
-
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private PlaceDescriptionAdapter mAdapter;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -61,54 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initPlaceLibrary();
-        ArrayList<ExampleItem> exampleList = new ArrayList<>();
-        for (PlaceDescription pd :
-                placeLibrary.getPlaceDescriptions()) {
-            exampleList.add(new ExampleItem(R.drawable.ic_android, pd.getName(), pd.getDescription()));
-        }
-
-        mRecyclerView = findViewById(R.id.recyclerView);
-        mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new ExampleAdapter(exampleList);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
-    }
-
-    private boolean validateInitJson() {
-        EditText editableTextInitJson = textInitJson.getEditText();
-        if (editableTextInitJson != null) {
-            String initJson = editableTextInitJson.getText().toString().trim();
-
-            if (initJson.isEmpty()) {
-                textInitJson.setError("Field can't be empty");
-                return false;
-            } else {
-                textInitJson.setError(null);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void initPlaceDescription(View v) {
-        if (!validateInitJson()) {
-            return;
-        }
-
-        String jsonStr = textInitJson.getEditText().getText().toString();
-        Log.i("initPlaceDescription", "JSON String : " + jsonStr);
-
-        PlaceDescription placeDescription = new PlaceDescription(jsonStr);
-        textPlaceDescriptionName.setText(String.format(getResources().getString(R.string.placedescription_name), placeDescription.getName()));
-        textPlaceDescriptionDescription.setText(String.format(getResources().getString(R.string.placedescription_description), placeDescription.getDescription()));
-        textPlaceDescriptionCategory.setText(String.format(getResources().getString(R.string.placedescription_category), placeDescription.getCategory()));
-        textPlaceDescriptionAddressTitle.setText(String.format(getResources().getString(R.string.placedescription_address_title), placeDescription.getAddressTitle()));
-        textPlaceDescriptionAddressStreet.setText(String.format(getResources().getString(R.string.placedescription_address_street), placeDescription.getAddressStreet()));
-        textPlaceDescriptionElevation.setText(String.format(getResources().getString(R.string.placedescription_elevation), placeDescription.getElevation()));
-        textPlaceDescriptionLatitude.setText(String.format(getResources().getString(R.string.placedescription_latitude), placeDescription.getLatitude()));
-        textPlaceDescriptionLongitude.setText(String.format(getResources().getString(R.string.placedescription_longitude), placeDescription.getLongitude()));
-        textPlaceDescriptionToJsonString.setText(String.format(getResources().getString(R.string.placedescription_name), placeDescription.getName()));
-        Log.i("initPlaceDescription", "PlaceDescription.toJsonString() : " + placeDescription.toJsonString());
+        buildRecycleView();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -127,4 +60,28 @@ public class MainActivity extends AppCompatActivity {
         placeLibrary = new PlaceLibrary(json);
     }
 
+    public void clickItem(int position) {
+        PlaceDescription placeDescription = placeLibrary.getPlaceDescriptions().get(position);
+        mAdapter.notifyItemChanged(position);
+
+        Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+        intent.putExtra("placeDescription.name", placeDescription.getName());
+        intent.putExtra("placeDescription.description", placeDescription.getDescription());
+        intent.putExtra("placeDescription.category", placeDescription.getCategory());
+        intent.putExtra("placeDescription.addressTitle", placeDescription.getAddressTitle());
+        intent.putExtra("placeDescription.addressStreet", placeDescription.getAddressStreet());
+        intent.putExtra("placeDescription.elevation", placeDescription.getElevation());
+        intent.putExtra("placeDescription.latitude", placeDescription.getLatitude());
+        intent.putExtra("placeDescription.longitude", placeDescription.getLongitude());
+        startActivity(intent);
+    }
+
+    public void buildRecycleView() {
+        RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new PlaceDescriptionAdapter(placeLibrary.getPlaceDescriptions());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(this::clickItem);
+    }
 }

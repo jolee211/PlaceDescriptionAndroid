@@ -59,6 +59,66 @@
       "elevation": 0,
       "latitude": 40.70986,
       "longitude": -74.01598
+    },
+    {
+      "name": "Saja and Umm Al Ramth Wildlife Sanctuary",
+      "description": "National Reserve",
+      "category": "Park",
+      "address-title": "Saja and Umm Al Ramth Wildlife Sanctuary",
+      "address-street": "Makkah Al Mukarramah Rd\nDhalm\nSaudi Arabia",
+      "elevation": 0,
+      "latitude": 22.54275,
+      "longitude": 42.61817
+    },
+    {
+      "name": "Coburn Station Homestead",
+      "description": "Lodging",
+      "category": "Lodging",
+      "address-title": "Coburn Station Homestead",
+      "address-street": "Coburn Rd\nCoburn WA 6532\nAustralia",
+      "elevation": 0,
+      "latitude": -26.69505,
+      "longitude": 114.32841
+    },
+    {
+      "name": "Los Juries Repuestos",
+      "description": "Auto parts store",
+      "category": "Store",
+      "address-title": "Los Juries Repuestos",
+      "address-street": "RP13, G3763 Los Juries\nSantiago del Estero\nArgentina",
+      "elevation": 0,
+      "latitude": -28.46682,
+      "longitude": -62.10962
+    },
+    {
+      "name": "Centro de Salud Las Petas",
+      "description": "Hospital",
+      "category": "Hospital",
+      "address-title": "Centro de Salud",
+      "address-street": "Carretera Hardeman - Colonia Pirai\nLas Petas\nBolivia",
+      "elevation": 0,
+      "latitude": -16.37554,
+      "longitude": -59.17912
+    },
+    {
+      "name": "Dajarra State School",
+      "description": "School",
+      "category": "School",
+      "address-title": "Dajarra",
+      "address-street": "Matheson St\nDajarra QLD 4825\nAustralia",
+      "elevation": 1.16,
+      "latitude": -21.66954,
+      "longitude": 139.63210
+    },
+    {
+      "name": "Mopan Mountain National Forestry Park",
+      "description": "National park",
+      "category": "Park",
+      "address-title": "Mopan",
+      "address-street": "009 Country Rd, Xinping Yi and Dai Autonomous County\nYuxi, Yunnan\nChina",
+      "elevation": 1.20,
+      "latitude": 23.96174,
+      "longitude": 101.93929
     }
   ]
 }
