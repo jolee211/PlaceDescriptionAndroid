@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         PlaceDescription placeDescription = placeLibrary.getPlaceDescriptions().get(position);
         mAdapter.notifyItemChanged(position);
 
-        Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+        Intent intent = new Intent(this, SecondActivity.class);
         intent.putExtra("placeDescription.name", placeDescription.getName());
         intent.putExtra("placeDescription.description", placeDescription.getDescription());
         intent.putExtra("placeDescription.category", placeDescription.getCategory());
@@ -109,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addItem() {
+        openAddActivity();
+
         int position = placeLibrary.size();
         if (placeLibrary.add(new PlaceDescription("New Item at Position " + position, "This is a description"))) {
             mAdapter.notifyItemInserted(position);
@@ -119,5 +121,10 @@ public class MainActivity extends AppCompatActivity {
         if (placeLibrary.remove(position) != null) {
             mAdapter.notifyItemRemoved(position);
         }
+    }
+
+    public void openAddActivity() {
+        Intent intent = new Intent(this, AddActivity.class);
+        startActivity(intent);
     }
 }
