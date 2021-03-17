@@ -43,4 +43,12 @@ public class PlaceLibrary {
     public ArrayList<PlaceDescription> getPlaceDescriptions() {
         return placeDescriptions;
     }
+
+    public void add(PlaceDescription placeDescription) {
+        placeDescriptions.add(placeDescription);
+    }
+
+    public void remove(int position) {
+        placeDescriptions.remove(position);
+    }
 }

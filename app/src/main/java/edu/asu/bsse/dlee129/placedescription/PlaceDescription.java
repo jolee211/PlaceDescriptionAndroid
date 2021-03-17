@@ -48,6 +48,11 @@ public class PlaceDescription {
         }
     }
 
+    public PlaceDescription(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public String toJsonString() {
         String ret = "";
         try {

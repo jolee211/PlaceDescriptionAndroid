@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +37,9 @@ import java.nio.charset.StandardCharsets;
 public class MainActivity extends AppCompatActivity {
     private PlaceLibrary placeLibrary;
     private PlaceDescriptionAdapter mAdapter;
+    private Button buttonAdd;
+    private Button buttonRemove;
+    private EditText editTextRemove;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -41,7 +47,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initPlaceLibrary();
-        buildRecycleView();
+        buildRecyclerView();
+
+        buttonAdd = findViewById(R.id.button_add);
+        buttonRemove = findViewById(R.id.button_remove);
+        editTextRemove = findViewById(R.id.edittext_remove);
+        buttonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addItem();
+            }
+        });
+        buttonRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = Integer.parseInt(editTextRemove.getText().toString());
+                removeItem(position);
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -76,12 +99,22 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void buildRecycleView() {
+    public void buildRecyclerView() {
         RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new PlaceDescriptionAdapter(placeLibrary.getPlaceDescriptions());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this::clickItem);
+    }
+
+    public void addItem() {
+        placeLibrary.add(new PlaceDescription("New Item at Position", "This is a description"));
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void removeItem(int position) {
+        placeLibrary.remove(position);
+        mAdapter.notifyDataSetChanged();
     }
 }
