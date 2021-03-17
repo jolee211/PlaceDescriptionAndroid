@@ -109,12 +109,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addItem() {
-        placeLibrary.add(new PlaceDescription("New Item at Position", "This is a description"));
-        mAdapter.notifyDataSetChanged();
+        int position = placeLibrary.size();
+        if (placeLibrary.add(new PlaceDescription("New Item at Position " + position, "This is a description"))) {
+            mAdapter.notifyItemInserted(position);
+        }
     }
 
     public void removeItem(int position) {
-        placeLibrary.remove(position);
-        mAdapter.notifyDataSetChanged();
+        if (placeLibrary.remove(position) != null) {
+            mAdapter.notifyItemRemoved(position);
+        }
     }
 }

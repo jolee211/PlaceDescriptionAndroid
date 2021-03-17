@@ -44,11 +44,25 @@ public class PlaceLibrary {
         return placeDescriptions;
     }
 
-    public void add(PlaceDescription placeDescription) {
-        placeDescriptions.add(placeDescription);
+    public boolean add(PlaceDescription placeDescription) {
+        try {
+            return placeDescriptions.add(placeDescription);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public void remove(int position) {
-        placeDescriptions.remove(position);
+    public PlaceDescription remove(int position) {
+        try {
+            return placeDescriptions.remove(position);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int size() {
+        return placeDescriptions.size();
     }
 }
