@@ -53,6 +53,8 @@ public class PlaceDescription {
         this.description = description;
     }
 
+    public PlaceDescription() { }
+
     public String toJsonString() {
         String ret = "";
         try {
@@ -103,5 +105,37 @@ public class PlaceDescription {
 
     public Double getLongitude() {
         return longitude;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setAddressTitle(String addressTitle) {
+        this.addressTitle = addressTitle;
+    }
+
+    public void setAddressStreet(String addressStreet) {
+        this.addressStreet = addressStreet;
+    }
+
+    public void setElevation(Double elevation) {
+        this.elevation = elevation;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 }
