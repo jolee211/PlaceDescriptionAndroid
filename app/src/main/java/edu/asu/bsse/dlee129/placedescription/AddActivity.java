@@ -60,9 +60,15 @@ public class AddActivity extends AppCompatActivity {
                 pd.setCategory(editTextCategory.getText().toString());
                 pd.setAddressTitle(editTextAddressTitle.getText().toString());
                 pd.setAddressStreet(editTextAddressStreet.getText().toString());
-                pd.setElevation(Double.valueOf(editTextElevation.getText().toString()));
-                pd.setLatitude(Double.valueOf(editTextLatitude.getText().toString()));
-                pd.setLongitude(Double.valueOf(editTextLongitude.getText().toString()));
+
+                String elevationString = editTextElevation.getText().toString();
+                String latitudeString = editTextLatitude.getText().toString();
+                String longitudeString = editTextLongitude.getText().toString();
+                pd.setElevation(elevationString != null && !elevationString.isEmpty() ? Double.parseDouble(elevationString) : 0);
+                pd.setLatitude(latitudeString != null && !latitudeString.isEmpty() ? Double.parseDouble(latitudeString) : 0);
+                pd.setLongitude(longitudeString != null && !longitudeString.isEmpty() ? Double.parseDouble(longitudeString) : 0);
+                MainActivity.addPlaceDescription(pd);
+                finish();
             }
         });
     }

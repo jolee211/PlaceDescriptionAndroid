@@ -3,6 +3,8 @@ package edu.asu.bsse.dlee129.placedescription;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.Serializable;
@@ -16,6 +18,7 @@ public class SecondActivity extends AppCompatActivity {
     private TextView textPlaceDescriptionElevation;
     private TextView textPlaceDescriptionLatitude;
     private TextView textPlaceDescriptionLongitude;
+    private Button buttonOK;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,5 +49,13 @@ public class SecondActivity extends AppCompatActivity {
         textPlaceDescriptionElevation.setText("Elevation: " + elevation);
         textPlaceDescriptionLatitude.setText(getString(R.string.placedescription_latitude, latitude));
         textPlaceDescriptionLongitude.setText(getString(R.string.placedescription_longitude, longitude));
+
+        buttonOK = (Button) findViewById(R.id.buttonOK);
+        buttonOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

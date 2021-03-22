@@ -5,6 +5,8 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 // Copyright 2021 David Lee
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,7 +24,7 @@ import org.json.JSONObject;
  * @author David Lee    mailto:dlee129@asu.edu
  * @version January 2021
  */
-public class PlaceDescription {
+public class PlaceDescription implements Serializable {
     private String name = "";
     private String description = "";
     private String category = "";

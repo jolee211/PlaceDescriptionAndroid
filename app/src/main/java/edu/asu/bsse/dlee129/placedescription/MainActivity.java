@@ -35,10 +35,8 @@ import java.nio.charset.StandardCharsets;
  * @version February 2021
  */
 public class MainActivity extends AppCompatActivity {
-    private PlaceLibrary placeLibrary;
+    private static PlaceLibrary placeLibrary;
     private PlaceDescriptionAdapter mAdapter;
-    private Button buttonAdd;
-    private Button buttonRemove;
     private EditText editTextRemove;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -49,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         initPlaceLibrary();
         buildRecyclerView();
 
-        buttonAdd = findViewById(R.id.button_add);
-        buttonRemove = findViewById(R.id.button_remove);
+        Button buttonAdd = findViewById(R.id.button_add);
+        Button buttonRemove = findViewById(R.id.button_remove);
         editTextRemove = findViewById(R.id.edittext_remove);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,12 +107,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addItem() {
-        openAddActivity();
-
         int position = placeLibrary.size();
-        if (placeLibrary.add(new PlaceDescription("New Item at Position " + position, "This is a description"))) {
-            mAdapter.notifyItemInserted(position);
-        }
+        openAddActivity();
+        mAdapter.notifyItemInserted(position);
     }
 
     public void removeItem(int position) {
@@ -126,5 +121,12 @@ public class MainActivity extends AppCompatActivity {
     public void openAddActivity() {
         Intent intent = new Intent(this, AddActivity.class);
         startActivity(intent);
+    }
+
+    public static boolean addPlaceDescription(PlaceDescription pd) {
+        if (placeLibrary != null) {
+            return placeLibrary.add(pd);
+        }
+        return false;
     }
 }
