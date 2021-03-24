@@ -41,4 +41,6 @@
     <string name="placedescription_longitude">Longitude: %1$f</string>
     <string name="placedescription_PlaceDescription.toJsonString">PlaceDescription.toJsonString(): %1$s</string>
     <string name="placeholder_image">Placeholder image</string>
+    <string name="text_view_or_update">View or update details of the Place</string>
+    <string name="text_add">Enter details of the new Place</string>
 </resources>

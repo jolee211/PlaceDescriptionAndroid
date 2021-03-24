@@ -1,12 +1,12 @@
 package edu.asu.bsse.dlee129.placedescription;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 // Copyright 2021 David Lee
 /*
@@ -35,7 +35,6 @@ public class AddActivity extends AppCompatActivity {
     private EditText editTextElevation;
     private EditText editTextLatitude;
     private EditText editTextLongitude;
-    private Button buttonSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,26 +49,27 @@ public class AddActivity extends AppCompatActivity {
         editTextElevation = (EditText) findViewById(R.id.editTextElevation);
         editTextLatitude = (EditText) findViewById(R.id.editTextLatitude);
         editTextLongitude = (EditText) findViewById(R.id.editTextLongitude);
-        buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pd = new PlaceDescription();
-                pd.setName(editTextName.getText().toString());
-                pd.setDescription(editTextDescription.getText().toString());
-                pd.setCategory(editTextCategory.getText().toString());
-                pd.setAddressTitle(editTextAddressTitle.getText().toString());
-                pd.setAddressStreet(editTextAddressStreet.getText().toString());
 
-                String elevationString = editTextElevation.getText().toString();
-                String latitudeString = editTextLatitude.getText().toString();
-                String longitudeString = editTextLongitude.getText().toString();
-                pd.setElevation(elevationString != null && !elevationString.isEmpty() ? Double.parseDouble(elevationString) : 0);
-                pd.setLatitude(latitudeString != null && !latitudeString.isEmpty() ? Double.parseDouble(latitudeString) : 0);
-                pd.setLongitude(longitudeString != null && !longitudeString.isEmpty() ? Double.parseDouble(longitudeString) : 0);
-                MainActivity.addPlaceDescription(pd);
-                finish();
-            }
+        TextView textMessage = (TextView) findViewById(R.id.textMessage);
+        textMessage.setText(getIntent().getStringExtra("textMessage"));
+
+        Button buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
+        buttonSubmit.setOnClickListener(v -> {
+            pd = new PlaceDescription();
+            pd.setName(editTextName.getText().toString());
+            pd.setDescription(editTextDescription.getText().toString());
+            pd.setCategory(editTextCategory.getText().toString());
+            pd.setAddressTitle(editTextAddressTitle.getText().toString());
+            pd.setAddressStreet(editTextAddressStreet.getText().toString());
+
+            String elevationString = editTextElevation.getText().toString();
+            String latitudeString = editTextLatitude.getText().toString();
+            String longitudeString = editTextLongitude.getText().toString();
+            pd.setElevation(elevationString != null && !elevationString.isEmpty() ? Double.parseDouble(elevationString) : 0);
+            pd.setLatitude(latitudeString != null && !latitudeString.isEmpty() ? Double.parseDouble(latitudeString) : 0);
+            pd.setLongitude(longitudeString != null && !longitudeString.isEmpty() ? Double.parseDouble(longitudeString) : 0);
+            MainActivity.addPlaceDescription(pd);
+            finish();
         });
     }
 }

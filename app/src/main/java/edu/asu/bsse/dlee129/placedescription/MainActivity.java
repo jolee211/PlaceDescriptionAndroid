@@ -1,5 +1,6 @@
 package edu.asu.bsse.dlee129.placedescription;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Build;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -81,29 +83,13 @@ public class MainActivity extends AppCompatActivity {
         placeLibrary = new PlaceLibrary(json);
     }
 
-    public void clickItem(int position) {
-        PlaceDescription placeDescription = placeLibrary.getPlaceDescriptions().get(position);
-        mAdapter.notifyItemChanged(position);
-
-        Intent intent = new Intent(this, SecondActivity.class);
-        intent.putExtra("placeDescription.name", placeDescription.getName());
-        intent.putExtra("placeDescription.description", placeDescription.getDescription());
-        intent.putExtra("placeDescription.category", placeDescription.getCategory());
-        intent.putExtra("placeDescription.addressTitle", placeDescription.getAddressTitle());
-        intent.putExtra("placeDescription.addressStreet", placeDescription.getAddressStreet());
-        intent.putExtra("placeDescription.elevation", placeDescription.getElevation());
-        intent.putExtra("placeDescription.latitude", placeDescription.getLatitude());
-        intent.putExtra("placeDescription.longitude", placeDescription.getLongitude());
-        startActivity(intent);
-    }
-
     public void buildRecyclerView() {
         RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new PlaceDescriptionAdapter(placeLibrary.getPlaceDescriptions());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(this::clickItem);
+        mAdapter.setOnItemClickListener(position -> showInputBox(placeLibrary.get(position), position));
     }
 
     public void addItem() {
@@ -120,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openAddActivity() {
         Intent intent = new Intent(this, AddActivity.class);
+        intent.putExtra("textMessage", getString(R.string.text_add));
         startActivity(intent);
     }
 
@@ -128,5 +115,58 @@ public class MainActivity extends AppCompatActivity {
             return placeLibrary.add(pd);
         }
         return false;
+    }
+
+    public void showInputBox(PlaceDescription oldItem, int position) {
+        Dialog dialog = new Dialog(MainActivity.this);
+        dialog.setTitle("View/Modify Place");
+        dialog.setContentView(R.layout.activity_add);
+
+        TextView textMessage = (TextView) dialog.findViewById(R.id.textMessage);
+        textMessage.setText(getString(R.string.text_view_or_update));
+
+        EditText editTextName = (EditText) dialog.findViewById(R.id.editTextName);
+        editTextName.setText(oldItem.getName());
+
+        EditText editTextDescription = (EditText) dialog.findViewById(R.id.editTextDescription);
+        editTextDescription.setText(oldItem.getDescription());
+
+        EditText editTextCategory = (EditText) dialog.findViewById(R.id.editTextCategory);
+        editTextCategory.setText(oldItem.getCategory());
+
+        EditText editTextAddressTitle = (EditText) dialog.findViewById(R.id.editTextAddressTitle);
+        editTextAddressTitle.setText(oldItem.getAddressTitle());
+
+        EditText editTextAddressStreet = (EditText) dialog.findViewById(R.id.editTextAddressStreet);
+        editTextAddressStreet.setText(oldItem.getAddressStreet());
+
+        EditText editTextElevation = (EditText) dialog.findViewById(R.id.editTextElevation);
+        editTextElevation.setText(oldItem.getElevation().toString());
+
+        EditText editTextLatitude = (EditText) dialog.findViewById(R.id.editTextLatitude);
+        editTextLatitude.setText(oldItem.getLatitude().toString());
+
+        EditText editTextLongitude = (EditText) dialog.findViewById(R.id.editTextLongitude);
+        editTextLongitude.setText(oldItem.getLongitude().toString());
+
+        Button buttonSubmit = (Button) dialog.findViewById(R.id.buttonSubmit);
+        buttonSubmit.setOnClickListener(v -> {
+            oldItem.setName(editTextName.getText().toString());
+            oldItem.setDescription(editTextDescription.getText().toString());
+            oldItem.setCategory(editTextCategory.getText().toString());
+            oldItem.setAddressTitle(editTextAddressTitle.getText().toString());
+            oldItem.setAddressStreet(editTextAddressStreet.getText().toString());
+
+            String elevationString = editTextElevation.getText().toString();
+            String latitudeString = editTextLatitude.getText().toString();
+            String longitudeString = editTextLongitude.getText().toString();
+            oldItem.setElevation(elevationString != null && !elevationString.isEmpty() ? Double.parseDouble(elevationString) : 0);
+            oldItem.setLatitude(latitudeString != null && !latitudeString.isEmpty() ? Double.parseDouble(latitudeString) : 0);
+            oldItem.setLongitude(longitudeString != null && !longitudeString.isEmpty() ? Double.parseDouble(longitudeString) : 0);
+            placeLibrary.set(position, oldItem);
+            mAdapter.notifyDataSetChanged();
+            dialog.dismiss();
+        });
+        dialog.show();
     }
 }

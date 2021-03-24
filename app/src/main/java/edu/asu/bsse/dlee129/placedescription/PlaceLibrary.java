@@ -65,4 +65,12 @@ public class PlaceLibrary {
     public int size() {
         return placeDescriptions.size();
     }
+
+    public PlaceDescription set(int position, PlaceDescription pd) {
+        return placeDescriptions.set(position, pd);
+    }
+
+    public PlaceDescription get(int position) {
+        return placeDescriptions.get(position);
+    }
 }
