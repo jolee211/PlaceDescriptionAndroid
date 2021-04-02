@@ -1,15 +1,6 @@
 package edu.asu.bsse.dlee129.placedescription;// Copyright 2021 David Lee
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
 
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,60 +18,20 @@ import java.util.ArrayList;
  * @author David Lee    mailto:dlee129@asu.edu
  * @version January 2021
  */
-public class PlaceDescriptionAdapter extends RecyclerView.Adapter<PlaceDescriptionAdapter.PlaceDescriptionHolder> {
-    private final ArrayList<PlaceDescription> placeDescriptionList;
-    private OnItemClickListener mListener;
+public class PlaceDescriptionAdapter {
+    private PlaceDescription placeDescription;
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
+    public PlaceDescriptionAdapter(PlaceDescription pd) {
+        this.placeDescription = pd;
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mListener = listener;
-    }
-
-    public static class PlaceDescriptionHolder extends RecyclerView.ViewHolder {
-        public ImageView mImageView;
-        public TextView mTextView1;
-        public TextView mTextView2;
-
-        public PlaceDescriptionHolder(@NonNull View itemView, final OnItemClickListener listener) {
-            super(itemView);
-            mImageView = itemView.findViewById(R.id.imageView);
-            mTextView1 = itemView.findViewById(R.id.textView);
-            mTextView2 = itemView.findViewById(R.id.textView2);
-            itemView.setOnClickListener(v -> {
-                if (listener != null) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(position);
-                    }
-                }
-            });
-        }
-    }
-
-    public PlaceDescriptionAdapter(ArrayList<PlaceDescription> placeDescriptionList) {
-        this.placeDescriptionList = placeDescriptionList;
+    public PlaceDescription getPlaceDescription() {
+        return placeDescription;
     }
 
     @NonNull
     @Override
-    public PlaceDescriptionHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.place_description_item, parent, false);
-        return new PlaceDescriptionHolder(v, mListener);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull PlaceDescriptionHolder holder, int position) {
-        PlaceDescription currentItem = placeDescriptionList.get(position);
-        holder.mImageView.setImageResource(R.drawable.ic_android);
-        holder.mTextView1.setText(currentItem.getName());
-        holder.mTextView2.setText(currentItem.getDescription());
-    }
-
-    @Override
-    public int getItemCount() {
-        return placeDescriptionList.size();
+    public String toString() {
+        return placeDescription.getName();
     }
 }

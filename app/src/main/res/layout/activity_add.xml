@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Latitude (33.306388)"
-            android:inputType="numberDecimal" />
+            android:inputType="numberSigned" />
 
         <EditText
             android:id="@+id/editTextLongitude"
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Longitude (-111.679121)"
-            android:inputType="numberDecimal" />
+            android:inputType="numberSigned" />
 
         <Button
             android:id="@+id/buttonSubmit"

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
+import android.text.InputType;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.stream.Collectors;
 
 // Copyright 2021 David Lee
 /*
@@ -38,7 +40,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class MainActivity extends AppCompatActivity {
     private static PlaceLibrary placeLibrary;
-    private PlaceDescriptionAdapter mAdapter;
+    private PlaceDescriptionListAdapter mAdapter;
     private EditText editTextRemove;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -52,19 +54,14 @@ public class MainActivity extends AppCompatActivity {
         Button buttonAdd = findViewById(R.id.button_add);
         Button buttonRemove = findViewById(R.id.button_remove);
         editTextRemove = findViewById(R.id.edittext_remove);
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addItem();
-            }
+        buttonAdd.setOnClickListener(v -> addItem());
+        buttonRemove.setOnClickListener(v -> {
+            int position = Integer.parseInt(editTextRemove.getText().toString());
+            removeItem(position);
         });
-        buttonRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = Integer.parseInt(editTextRemove.getText().toString());
-                removeItem(position);
-            }
-        });
+
+        Button buttonDistance = findViewById(R.id.button_distance);
+        buttonDistance.setOnClickListener(v -> openDistanceActivity());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -86,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     public void buildRecyclerView() {
         RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new PlaceDescriptionAdapter(placeLibrary.getPlaceDescriptions());
+        mAdapter = new PlaceDescriptionListAdapter(placeLibrary.getPlaceDescriptions());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(position -> showInputBox(placeLibrary.get(position), position));
@@ -110,11 +107,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public static boolean addPlaceDescription(PlaceDescription pd) {
+    public void openDistanceActivity() {
+        Intent intent = new Intent(this, DistanceActivity.class);
+        startActivity(intent);
+    }
+
+    public static void addPlaceDescription(PlaceDescription pd) {
         if (placeLibrary != null) {
-            return placeLibrary.add(pd);
+            placeLibrary.add(pd);
         }
-        return false;
     }
 
     public void showInputBox(PlaceDescription oldItem, int position) {
@@ -145,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
         EditText editTextLatitude = (EditText) dialog.findViewById(R.id.editTextLatitude);
         editTextLatitude.setText(oldItem.getLatitude().toString());
+        editTextLatitude.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_CLASS_NUMBER);
 
         EditText editTextLongitude = (EditText) dialog.findViewById(R.id.editTextLongitude);
         editTextLongitude.setText(oldItem.getLongitude().toString());
@@ -168,5 +170,11 @@ public class MainActivity extends AppCompatActivity {
             dialog.dismiss();
         });
         dialog.show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static List<PlaceDescriptionAdapter> getPlaceDescriptionAdapters() {
+        return placeLibrary.getPlaceDescriptions().stream()
+                .map(PlaceDescriptionAdapter::new).collect(Collectors.toList());
     }
 }

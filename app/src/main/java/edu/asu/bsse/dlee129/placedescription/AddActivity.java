@@ -1,6 +1,7 @@
 package edu.asu.bsse.dlee129.placedescription;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,6 +49,7 @@ public class AddActivity extends AppCompatActivity {
         editTextAddressStreet = (EditText) findViewById(R.id.editTextAddressStreet);
         editTextElevation = (EditText) findViewById(R.id.editTextElevation);
         editTextLatitude = (EditText) findViewById(R.id.editTextLatitude);
+        editTextLatitude.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_CLASS_NUMBER);
         editTextLongitude = (EditText) findViewById(R.id.editTextLongitude);
 
         TextView textMessage = (TextView) findViewById(R.id.textMessage);
